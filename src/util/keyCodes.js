@@ -1,0 +1,9 @@
+export const KEY_CODE_LEFT      = 37;
+export const KEY_CODE_UP        = 38;
+export const KEY_CODE_RIGHT     = 39;
+export const KEY_CODE_DOWN      = 40;
+export const KEY_CODE_SPACE_BAR = 32;
+export const KEY_CODE_PAGE_UP   = 33;
+export const KEY_CODE_PAGE_DOWN = 34;
+export const KEY_CODE_END       = 35;
+export const KEY_CODE_HOME      = 36;

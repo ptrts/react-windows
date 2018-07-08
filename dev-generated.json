@@ -1,0 +1,97 @@
+{
+  "debug": true,
+  "devtool": "eval-source-map",
+  "resolve": {
+    "extensions": [
+      "",
+      ".js",
+      ".jsx"
+    ],
+    "alias": {
+      "actions": "./src/actions/",
+      "components": "./src/components/",
+      "sources": "./src/sources/",
+      "stores": "./src/stores/",
+      "styles": "./src/styles/",
+      "config": "./src/config/dev",
+      "react/lib/ReactMount": "react-dom/lib/ReactMount"
+    }
+  },
+  "module": {
+    "preLoaders": [
+      {
+        "test": {},
+        "include": "./src",
+        "loader": "eslint-loader"
+      }
+    ],
+    "loaders": [
+      {
+        "test": {},
+        "loader": "style-loader!css-loader"
+      },
+      {
+        "test": {},
+        "loader": "style-loader!css-loader!sass-loader?outputStyle=expanded&indentedSyntax"
+      },
+      {
+        "test": {},
+        "loader": "style-loader!css-loader!sass-loader?outputStyle=expanded"
+      },
+      {
+        "test": {},
+        "loader": "url-loader?limit=8192"
+      },
+      {
+        "test": {},
+        "loader": "file-loader"
+      },
+      {
+        "test": {},
+        "loader": [
+          "react-hot",
+          "babel-loader"
+        ],
+        "include": [
+          "./src"
+        ]
+      }
+    ]
+  },
+  "entry": [
+    "webpack-dev-server/client?http://127.0.0.1:8000",
+    "webpack/hot/only-dev-server",
+    "./src/index"
+  ],
+  "cache": true,
+  "plugins": [
+    {
+      "modulesDirectories": [
+        "bower_components"
+      ],
+      "manifestFiles": [
+        "bower.json"
+      ],
+      "includes": [
+        {}
+      ],
+      "excludes": [],
+      "searchResolveModulesDirectories": false
+    },
+    {},
+    {}
+  ],
+  "output": {
+    "path": "/dist/assets",
+    "filename": "app.js",
+    "publicPath": "/assets/"
+  },
+  "devServer": {
+    "contentBase": "./src/",
+    "historyApiFallback": true,
+    "hot": true,
+    "port": 8000,
+    "publicPath": "/assets/",
+    "noInfo": false
+  }
+}
