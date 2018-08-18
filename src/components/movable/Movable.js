@@ -17,7 +17,7 @@ class Movable extends React.Component {
           this.props.style
         )
       }>
-        Movable: {JSON.stringify(this.props.style)}
+        {this.props.children}
       </div>
     );
   }

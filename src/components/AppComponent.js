@@ -14,7 +14,10 @@ class AppComponent extends React.Component {
 
       <div>
         AppComponent
-        <Movable style={{width: '400px', height: '200px'}}/>
+        <Movable style={{width: '400px', height: '200px'}}>
+          <h1>Hello</h1>
+          <h2>World</h2>
+        </Movable>
       </div>
     );
   }
