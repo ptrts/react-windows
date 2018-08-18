@@ -3,25 +3,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {AppContainer} from 'react-hot-loader'
-import App from './components/Main';
+import AppComponent from './components/AppComponent';
 
-const render = Component => {
+const render = () => {
   ReactDOM.render(
     <AppContainer>
-      <Component/>
+      <AppComponent/>
     </AppContainer>,
     document.getElementById('app'),
   )
 };
 
-render(App);
+render();
 
 if(module.hot) {
 
-  module.hot.accept('./components/Main', () => {
+  module.hot.accept('./components/AppComponent', () => {
 
     console.log('Here!');
 
-    render(App);
+    render();
   })
 }
