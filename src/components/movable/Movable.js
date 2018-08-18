@@ -52,21 +52,21 @@ class Movable extends React.Component {
   setupStartCoordinates(e) {
 
     // Ищем точку отсчета, соответствующую типу позициионирования главного div нашего компонента
-    let bigDivElement = this.ref.current;
-    let style = window.getComputedStyle(bigDivElement);
+    let element = this.ref.current;
+    let style = window.getComputedStyle(element);
     let position = style.getPropertyValue('position');
     if(position === 'absolute') {
 
       // Относительно ближайшего спозиционированного предка
 
-      this.refX = bigDivElement.offsetLeft;
-      this.refY = bigDivElement.offsetTop;
+      this.refX = element.offsetLeft;
+      this.refY = element.offsetTop;
 
     } else if(position === 'fixed') {
 
       // Относительно окна браузера
 
-      let boundingClientRect = bigDivElement.getBoundingClientRect();
+      let boundingClientRect = element.getBoundingClientRect();
       this.refX = boundingClientRect.x;
       this.refY = boundingClientRect.y;
 
@@ -118,11 +118,26 @@ class Movable extends React.Component {
       <div
         ref={this.ref}
         style={style}
-        onMouseDown={this.handleOnMouseDown}
       >
         {this.props.children}
       </div>
     );
+  }
+
+  componentDidMount() {
+
+    let element = this.ref.current;
+
+    const movers = element.querySelectorAll('.mover');
+
+    if (movers && movers.length) {
+      for (let i = 0; i < movers.length; i++) {
+        const mover = movers[i];
+        mover.onmousedown = this.handleOnMouseDown;
+      }
+    } else {
+      element.onmousedown = this.handleOnMouseDown;
+    }
   }
 }
 
