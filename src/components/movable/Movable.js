@@ -133,11 +133,16 @@ class Movable extends React.Component {
     if (movers && movers.length) {
       for (let i = 0; i < movers.length; i++) {
         const mover = movers[i];
-        mover.onmousedown = this.handleOnMouseDown;
+        this.setupMover(mover);
       }
     } else {
-      element.onmousedown = this.handleOnMouseDown;
+      this.setupMover(mover);
     }
+  }
+
+  setupMover(mover) {
+    mover.onmousedown = this.handleOnMouseDown;
+    mover.style['user-select'] = 'none';
   }
 }
 
