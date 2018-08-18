@@ -5,6 +5,7 @@ import './AppComponent.css';
 import 'bootstrap';
 
 import React from 'react';
+import Movable from './movable/Movable';
 
 class AppComponent extends React.Component {
 
@@ -13,6 +14,7 @@ class AppComponent extends React.Component {
 
       <div>
         AppComponent
+        <Movable style={{width: '400px', height: '200px'}}/>
       </div>
     );
   }
