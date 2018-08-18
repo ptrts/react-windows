@@ -7,51 +7,118 @@ class Movable extends React.Component {
   constructor(props) {
     super(props);
 
-    this.handleOnDrag = this.handleOnDrag.bind(this);
-    this.handleOnDragStart = this.handleOnDragStart.bind(this);
-    this.handleOnDragStartCapture = this.handleOnDragStartCapture.bind(this);
-    this.handleOnDragEnd = this.handleOnDragEnd.bind(this);
-    this.handleOnDragEndCapture = this.handleOnDragEndCapture.bind(this);
+    this.ref = React.createRef();
+
+    this.handleOnMouseDown = this.handleOnMouseDown.bind(this);
+    this.handleOnMouseUp = this.handleOnMouseUp.bind(this);
+    this.handleOnMouseMove = this.handleOnMouseMove.bind(this);
+
+    // Значения стейта по-умолчанию
+    this.state = {
+      top: '100px',
+      left: '100px',
+    };
+
+    // Из стиля, переданного через пропы, достаем top и left, которые у нас будут на самом деле не часть пропа, а
+    // которые будут частью нашего стейта
+    // Значения этих свойств, переданные через пропы - это будут всего-навсего начальные значения нашего стейта
+    // При обновлении пропов, перед последующими вызовами метода render, top и left, переданные в пропах будут
+    // уже игнорироваться. Вместо них будут браться соответствующие значения из стейта.
+    if (this.props.style) {
+      if (this.props.style.hasOwnProperty('top')) {
+        this.state.top = this.props.style.top;
+      }
+      if (this.props.style.hasOwnProperty('left')) {
+        this.state.left = this.props.style.left;
+      }
+    }
   }
 
-  handleOnDrag() {
-    console.warn('handleOnDrag');
+  handleOnMouseUp() {
+    document.onmouseup = null;
+    document.onmousemove = null;
   }
 
-  handleOnDragStart() {
-    console.warn('handleOnDragStart');
+  handleOnMouseDown(e) {
+
+    e.preventDefault();
+
+    document.onmouseup = this.handleOnMouseUp;
+    document.onmousemove = this.handleOnMouseMove;
+
+    this.setupStartCoordinates(e);
   }
 
-  handleOnDragStartCapture() {
-    console.warn('handleOnDragStartCapture');
+  setupStartCoordinates(e) {
+
+    // Ищем точку отсчета, соответствующую типу позициионирования главного div нашего компонента
+    let bigDivElement = this.ref.current;
+    let style = window.getComputedStyle(bigDivElement);
+    let position = style.getPropertyValue('position');
+    if(position === 'absolute') {
+
+      // Относительно ближайшего спозиционированного предка
+
+      this.refX = bigDivElement.offsetLeft;
+      this.refY = bigDivElement.offsetTop;
+
+    } else if(position === 'fixed') {
+
+      // Относительно окна браузера
+
+      let boundingClientRect = bigDivElement.getBoundingClientRect();
+      this.refX = boundingClientRect.x;
+      this.refY = boundingClientRect.y;
+
+    } else {
+      throw new Error(`Unexpected position ${position}`);
+    }
+
+    // Запоминаем позицию мышки в начале перетаскивания
+    this.startMouseClientX = e.clientX;
+    this.startMouseClientY = e.clientY;
   }
 
-  handleOnDragEnd() {
-    console.warn('handleOnDragEnd');
-  }
+  handleOnMouseMove(e) {
 
-  handleOnDragEndCapture() {
-    console.warn('handleOnDragEndCapture');
+    // Насколько пикселей мы сдвинули мышку
+    const dX = e.clientX - this.startMouseClientX;
+    const dY = e.clientY - this.startMouseClientY;
+
+    this.setState({
+      left: `${this.refX + dX}px`,
+      top: `${this.refY + dY}px`,
+    });
   }
 
   render() {
+
+    const style = Object.assign(
+
+      // Значения по-умолчанию
+      {
+        backgroundColor: 'Cyan',
+        wordWrap: 'break-word',
+        position: 'absolute',
+        width: '400px',
+        height: '200px',
+      },
+
+      // Значения, переданные нам извне
+      this.props.style,
+
+      // Значения из нашего внутреннего стейта
+      {
+        top: this.state.top,
+        left: this.state.left
+      }
+    );
+
     return (
       <div
-        style={
-          Object.assign(
-            {
-              backgroundColor: 'Cyan',
-              wordWrap: 'break-word'
-            },
-            this.props.style
-          )
-        }
-        draggable={true}
-        onDrag={this.handleOnDrag}
-        onDragStart={this.handleOnDragStart}
-        onDragStartCapture={this.handleOnDragStartCapture}
-        onDragEnd={this.handleOnDragEnd}
-        onDragEndCapture={this.handleOnDragEndCapture}
+        ref={this.ref}
+        style={style}
+        onMouseDown={this.handleOnMouseDown}
       >
         {this.props.children}
       </div>

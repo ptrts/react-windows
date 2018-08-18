@@ -11,13 +11,15 @@ class AppComponent extends React.Component {
 
   render() {
     return (
-
       <div>
-        AppComponent
-        <Movable style={{width: '400px', height: '200px'}}>
-          <h1>Hello</h1>
-          <h2>World</h2>
-        </Movable>
+        <div style={{width: '500px', height: '500px', backgroundColor: 'Yellow'}}/>
+        <div style={{position: 'relative'}}>
+          AppComponent
+          <Movable style={{width: '300px', height: '100px', position: 'fixed'}}>
+            <h1>Hello</h1>
+            <h2>World</h2>
+          </Movable>
+        </div>
       </div>
     );
   }
