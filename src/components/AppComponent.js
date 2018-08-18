@@ -5,7 +5,7 @@ import './AppComponent.css';
 import 'bootstrap';
 
 import React from 'react';
-import Movable from './movable/Movable';
+import Window from './window/Window';
 
 class AppComponent extends React.Component {
 
@@ -15,10 +15,10 @@ class AppComponent extends React.Component {
         <div style={{width: '500px', height: '500px', backgroundColor: 'Yellow'}}/>
         <div style={{position: 'relative'}}>
           AppComponent
-          <Movable style={{width: '300px', height: '100px', position: 'fixed'}}>
+          <Window style={{width: '300px', height: '100px', position: 'fixed'}}>
             <h1 className="mover">Hello</h1>
             <h2>World</h2>
-          </Movable>
+          </Window>
         </div>
       </div>
     );
