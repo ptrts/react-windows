@@ -14,6 +14,10 @@ $fw-window-shadow-color: $fw-shadow-color !default;
     border-bottom: solid $fw-window-border-color $fw-window-border-width;
   }
 
+  > * {
+    padding: 0.5em;
+  }
+
   .fw-window-header {
 
 
