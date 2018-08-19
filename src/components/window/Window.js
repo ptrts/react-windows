@@ -18,11 +18,16 @@ class Window extends React.Component {
     }
 
     this.handleOnMoveEnd = this.handleOnMoveEnd.bind(this);
+    this.handleCloseButton = this.handleCloseButton.bind(this);
   }
 
   handleOnMoveEnd(e) {
     store.local.set(this.leftKey, e.left);
     store.local.set(this.topKey, e.top);
+  }
+
+  handleCloseButton() {
+    this.props.onCloseRequest();
   }
 
   render() {
@@ -69,7 +74,9 @@ class Window extends React.Component {
               {this.props.header}
             </div>
 
-            <FontAwesomeIcon icon="times"/>
+            <div onClick={this.handleCloseButton}>
+              <FontAwesomeIcon icon="times"/>
+            </div>
 
           </div>
 
@@ -93,5 +100,9 @@ class Window extends React.Component {
     );
   }
 }
+
+Window.defaultProps = {
+  onCloseRequest: () => {}
+};
 
 export default Window;
