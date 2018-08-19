@@ -1,5 +1,33 @@
+$fw-window-background-color: $fw-background-color !default;
+$fw-window-border-color: $fw-border-color !default;
+$fw-window-border-width: $fw-border-width !default;
 
 .fw-window {
-  border: solid black 1px;
-  background-color: Cyan;
+  border: solid $fw-window-border-color $fw-window-border-width;
+  background-color: $fw-window-background-color;
+  /*h-offset v-offset blur spread color [inset]*/
+  box-shadow: 3px 3px 5px 0 Gray;
+
+  >:not(:last-child) {
+    border-bottom: solid $fw-window-border-color $fw-window-border-width;
+  }
+
+  .fw-window-header {
+
+
+    .fw-window-header-close-button {
+
+    }
+  }
+
+  .fw-window-body {
+
+  }
+
+  .fw-window-footer {
+
+    .fw-button {
+
+    }
+  }
 }
