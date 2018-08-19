@@ -88,7 +88,7 @@ class Window extends React.Component {
 
             {this.props.buttons}
 
-            <button className="fw-button">
+            <button className="fw-window-footer-close-button fw-button" onClick={this.handleCloseButton}>
               Закрыть
             </button>
 

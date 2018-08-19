@@ -63,9 +63,9 @@ class AppComponent extends React.Component {
 
               buttons={
                 <React.Fragment>
-                  <div className="fw-button">
+                  <button className="fw-button">
                     Дополнительная кнопка
-                  </div>
+                  </button>
                 </React.Fragment>
               }
 
