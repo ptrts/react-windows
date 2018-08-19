@@ -38,27 +38,38 @@ class Movable extends React.Component {
 
   setupStartCoordinates(e) {
 
-    // Ищем точку отсчета, соответствующую типу позициионирования главного div нашего компонента
     let element = this.ref.current;
+
+    let boundingClientRect = element.getBoundingClientRect();
+    this.startClientLeft = boundingClientRect.left;
+    this.startClientTop = boundingClientRect.top;
+    this.startClientRight = boundingClientRect.right;
+    this.startClientBottom = boundingClientRect.bottom;
+
+    // В итоге, нам нужно будет сдвинуть наш большой div, при помощи установки ему left и top в пикселях.
+    // Изначально left и top могут быть установлены в чем угодно, например, в процентах.
+    // Перед началом перетаскивания, нам нужно выяснить значения пиксельных left и top, соответствующих положению
+    // нашего div перед перетаскиванием.
+    //
+    // Для этого нужно выяснить, от какой точки в принципе откладываются эти left и top
     let style = window.getComputedStyle(element);
-    let position = style.getPropertyValue('position');
-    if(position === 'absolute') {
+    this.position = style.getPropertyValue('position');
+    if (this.position === 'absolute') {
 
       // Относительно ближайшего спозиционированного предка
 
-      this.refX = element.offsetLeft;
-      this.refY = element.offsetTop;
+      this.startPixelLeft = element.offsetLeft;
+      this.startPixelTop = element.offsetTop;
 
-    } else if(position === 'fixed') {
+    } else if(this.position === 'fixed') {
 
       // Относительно окна браузера
 
-      let boundingClientRect = element.getBoundingClientRect();
-      this.refX = boundingClientRect.x;
-      this.refY = boundingClientRect.y;
+      this.startPixelLeft = this.startClientLeft;
+      this.startPixelTop = this.startClientTop;
 
     } else {
-      throw new Error(`Unexpected position ${position}`);
+      throw new Error(`Unexpected position ${this.position}`);
     }
 
     // Запоминаем позицию мышки в начале перетаскивания
@@ -66,15 +77,42 @@ class Movable extends React.Component {
     this.startMouseClientY = e.clientY;
   }
 
+  isInsideWindowX(x) {
+    return x >= 0 && x <= window.innerWidth;
+  }
+
+  isInsideWindowY(y) {
+    return y >= 0 && y <= window.innerHeight;
+  }
+
   handleOnMouseMove(e) {
 
     // Насколько пикселей мы сдвинули мышку
-    const dX = e.clientX - this.startMouseClientX;
-    const dY = e.clientY - this.startMouseClientY;
+    let dX = e.clientX - this.startMouseClientX;
+    let dY = e.clientY - this.startMouseClientY;
+
+    // Скорректировать позицию по оси X
+
+    let uncorrectedLeft = this.startClientLeft + dX;
+    let uncorrectedRight = this.startClientRight + dX;
+    let uncorrectedTop = this.startClientTop + dY;
+    let uncorrectedBottom = this.startClientBottom + dY;
+    
+    if (uncorrectedLeft < 0) {
+      dX = dX - uncorrectedLeft;
+    } else if (uncorrectedRight > window.innerWidth) {
+      dX = dX - (uncorrectedRight - window.innerWidth);
+    }
+    
+    if (uncorrectedTop < 0) {
+      dY = dY - uncorrectedTop;
+    } else if (uncorrectedBottom > window.innerHeight) {
+      dY = dY - (uncorrectedBottom - window.innerHeight);
+    }
 
     this.setState({
-      left: `${this.refX + dX}px`,
-      top: `${this.refY + dY}px`,
+      left: `${this.startPixelLeft + dX}px`,
+      top: `${this.startPixelTop + dY}px`,
     });
   }
 
