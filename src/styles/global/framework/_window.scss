@@ -10,7 +10,7 @@ $fw-window-shadow-color: $fw-shadow-color !default;
   /*h-offset v-offset blur spread color [inset]*/
   box-shadow: 3px 3px 5px 0 $fw-window-shadow-color;
 
-  >:not(:last-child) {
+  > :not(:last-child) {
     border-bottom: solid $fw-window-border-color $fw-window-border-width;
   }
 
@@ -20,9 +20,12 @@ $fw-window-shadow-color: $fw-shadow-color !default;
 
   .fw-window-header {
 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-    .fw-window-header-close-button {
-
+    .fw-window-header-text {
+      font-size: 1.5em;
     }
   }
 

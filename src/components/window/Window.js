@@ -1,5 +1,6 @@
 import React from 'react';
 import store from 'store2';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import Movable from '../movable/Movable';
 
@@ -62,11 +63,13 @@ class Window extends React.Component {
 
         <div className="fw-window" style={styleForWindow}>
 
-          <div className="fw-window-header mover">
+          <div className="fw-window-header">
 
-            {this.props.header}
+            <div className="fw-window-header-text mover">
+              {this.props.header}
+            </div>
 
-            <div className="fw-window-header-close-button"/>
+            <FontAwesomeIcon icon="times"/>
 
           </div>
 
