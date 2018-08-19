@@ -35,6 +35,7 @@ class Window1 extends React.Component {
           </React.Fragment>
         }
 
+        onMinimizeRequest={this.props.onMinimizeRequest}
         onCloseRequest={this.props.onCloseRequest}
       />
     );
@@ -42,7 +43,8 @@ class Window1 extends React.Component {
 }
 
 Window1.defaultProps = {
-  onCloseRequest: () => {}
+  onCloseRequest: () => {},
+  onMinimizeRequest: () => {}
 };
 
 export default Window1;

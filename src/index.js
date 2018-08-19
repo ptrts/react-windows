@@ -7,8 +7,10 @@ import AppComponent from './components/AppComponent';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faWindowMinimize } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faTimes);
+library.add(faWindowMinimize);
 
 const render = () => {
   ReactDOM.render(

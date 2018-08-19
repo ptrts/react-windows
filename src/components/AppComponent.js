@@ -37,8 +37,20 @@ class AppComponent extends React.Component {
   }
 
   openWindow(id) {
-    const newWindow = <Window1 id={id} key={id} onCloseRequest={this.onCloseRequest.bind(this, id)}/>;
+    
+    const newWindow =
+      <Window1
+        id={id}
+        key={id}
+        onMinimizeRequest={this.onMinimizeRequest.bind(this, id)}
+        onCloseRequest={this.onCloseRequest.bind(this, id)}
+      />;
+    
     this.setWindow(id, newWindow);
+  }
+
+  onMinimizeRequest(id) {
+    this.setWindow(id, null);
   }
 
   onCloseRequest(id) {

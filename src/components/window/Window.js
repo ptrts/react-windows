@@ -18,12 +18,17 @@ class Window extends React.Component {
     }
 
     this.handleOnMoveEnd = this.handleOnMoveEnd.bind(this);
+    this.handleMinimizeButton = this.handleMinimizeButton.bind(this);
     this.handleCloseButton = this.handleCloseButton.bind(this);
   }
 
   handleOnMoveEnd(e) {
     store.local.set(this.leftKey, e.left);
     store.local.set(this.topKey, e.top);
+  }
+
+  handleMinimizeButton() {
+    this.props.onMinimizeRequest();
   }
 
   handleCloseButton() {
@@ -74,8 +79,12 @@ class Window extends React.Component {
               {this.props.header}
             </div>
 
-            <div onClick={this.handleCloseButton}>
-              <FontAwesomeIcon icon="times" className="fw-window-header-close-button"/>
+            <div onClick={this.handleMinimizeButton} className="fw-window-header-button">
+              <FontAwesomeIcon icon="window-minimize"/>
+            </div>
+
+            <div onClick={this.handleCloseButton} className="fw-window-header-button">
+              <FontAwesomeIcon icon="times"/>
             </div>
 
           </div>
@@ -102,7 +111,8 @@ class Window extends React.Component {
 }
 
 Window.defaultProps = {
-  onCloseRequest: () => {}
+  onCloseRequest: () => {},
+  onMinimizeRequest: () => {}
 };
 
 export default Window;

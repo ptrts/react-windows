@@ -32,7 +32,11 @@ $fw-window-shadow-color: $fw-shadow-color !default;
       flex-grow: 1;
     }
 
-    .fw-window-header-close-button {
+    .fw-window-header-button {
+
+      &:not(:last-child) {
+        margin-right: 0.5em;
+      }
 
       &:hover {
         color: Grey;
