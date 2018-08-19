@@ -9,8 +9,8 @@ class Window extends React.Component {
   constructor(props) {
     super(props);
 
-    this.leftKey = this.props.id + '.left';
-    this.topKey = this.props.id + '.top';
+    this.leftKey = 'window.' + this.props.id + '.left';
+    this.topKey = 'window.' + this.props.id + '.top';
 
     if (store.local.has(this.leftKey) && store.local.has(this.topKey)) {
       this.savedLeft = store.local.get(this.leftKey);

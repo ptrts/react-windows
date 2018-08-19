@@ -5,75 +5,73 @@ import './AppComponent.css';
 import 'bootstrap';
 
 import React from 'react';
-import Window from './window/Window';
+import Window1 from './window1/Window1';
 
 class AppComponent extends React.Component {
 
   constructor(props) {
     super(props);
 
-    this.handleCloseRequest = this.handleCloseRequest.bind(this);
+    this.onCloseRequest = this.onCloseRequest.bind(this);
+    this.openWindow = this.openWindow.bind(this);
 
     this.state = {
-      window1Opened: true
+      window1Opened: true,
+      windows: {}
     };
   }
 
-  handleCloseRequest() {
+  setWindow(id, window) {
+
+    const newWindowsObject = Object.assign({}, this.state.windows);
+
+    if (window) {
+      newWindowsObject[id] = window;
+    } else {
+      delete newWindowsObject[id];
+    }
+
     this.setState({
-      window1Opened: false
+      windows: newWindowsObject
     });
   }
 
+  openWindow(id) {
+    const newWindow = <Window1 id={id} key={id} onCloseRequest={this.onCloseRequest.bind(this, id)}/>;
+    this.setWindow(id, newWindow);
+  }
+
+  onCloseRequest(id) {
+    this.setWindow(id, null);
+  }
+
   render() {
+
+    const windowsArray = [];
+
+    for (let k in this.state.windows) {
+      if (this.state.windows.hasOwnProperty(k)) {
+        const window = this.state.windows[k];
+        windowsArray.push(window);
+      }
+    }
+
     return (
-      <div>
-        <div style={{width: '500px', height: '500px', backgroundColor: 'Yellow'}}/>
+      <React.Fragment>
+
+        <button className="fw-button" onClick={this.openWindow.bind(this, 1)}>
+          Окно 1
+        </button>
+
+        <button className="fw-button" onClick={this.openWindow.bind(this, 2)}>
+          Окно 2
+        </button>
+
         <div style={{position: 'relative'}}>
-          AppComponent
-          {
-            this.state.window1Opened &&
-
-            <Window
-
-              id="window1"
-
-              style={{
-                minWidth: '500px',
-                minHeight: '500px',
-                position: 'fixed',
-
-                // Начальная позиция окна, которая может быть изменена при перетаскивании
-                // и при восстановлении из локального хранилища предыдущего положения окна
-                //
-                // После перетаскивания и восстановления, при перерисовке окна данные параметры
-                // будут игнорироваться
-                left: '500px',
-                top: '500px'
-              }}
-
-              header="Заголовок окна"
-
-              body={
-                <React.Fragment>
-                  <h1>Hello</h1>
-                  <h2>World</h2>
-                </React.Fragment>
-              }
-
-              buttons={
-                <React.Fragment>
-                  <button className="fw-button">
-                    Дополнительная кнопка
-                  </button>
-                </React.Fragment>
-              }
-
-              onCloseRequest={this.handleCloseRequest}
-            />
-          }
+          {windowsArray}
         </div>
-      </div>
+
+      </React.Fragment>
     );
   }
 }
