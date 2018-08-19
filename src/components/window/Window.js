@@ -75,7 +75,7 @@ class Window extends React.Component {
             </div>
 
             <div onClick={this.handleCloseButton}>
-              <FontAwesomeIcon icon="times"/>
+              <FontAwesomeIcon icon="times" className="fw-window-header-close-button"/>
             </div>
 
           </div>

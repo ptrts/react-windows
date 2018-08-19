@@ -30,6 +30,13 @@ $fw-window-shadow-color: $fw-shadow-color !default;
     .fw-window-header-text {
       font-size: 1.5em;
     }
+
+    .fw-window-header-close-button {
+
+      &:hover {
+        color: Grey;
+      }
+    }
   }
 
   .fw-window-body {
