@@ -2,11 +2,13 @@ $fw-window-background-color: $fw-background-color !default;
 $fw-window-border-color: $fw-border-color !default;
 $fw-window-border-width: $fw-border-width !default;
 
+$fw-window-shadow-color: $fw-shadow-color !default;
+
 .fw-window {
   border: solid $fw-window-border-color $fw-window-border-width;
   background-color: $fw-window-background-color;
   /*h-offset v-offset blur spread color [inset]*/
-  box-shadow: 3px 3px 5px 0 Gray;
+  box-shadow: 3px 3px 5px 0 $fw-window-shadow-color;
 
   >:not(:last-child) {
     border-bottom: solid $fw-window-border-color $fw-window-border-width;
