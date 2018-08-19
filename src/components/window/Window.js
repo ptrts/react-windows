@@ -88,9 +88,9 @@ class Window extends React.Component {
 
             {this.props.buttons}
 
-            <div className="fw-button">
+            <button className="fw-button">
               Закрыть
-            </div>
+            </button>
 
           </div>
 

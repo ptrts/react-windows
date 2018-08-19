@@ -38,6 +38,14 @@ $fw-window-shadow-color: $fw-shadow-color !default;
 
   .fw-window-footer {
 
+    display: flex;
+    justify-content: flex-end;
+    align-items: baseline;
+
+    > :not(:last-child) {
+      margin-right: 0.5em;
+    }
+
     .fw-button {
 
     }
