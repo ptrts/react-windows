@@ -12,11 +12,8 @@ class Window extends React.Component {
     this.topKey = this.props.id + '.top';
 
     if (store.local.has(this.leftKey) && store.local.has(this.topKey)) {
-      this.initialLeft = store.local.get(this.leftKey);
-      this.initialTop = store.local.get(this.topKey);
-    } else {
-      this.initialLeft = this.props.initialLeft;
-      this.initialTop = this.props.initialTop;
+      this.savedLeft = store.local.get(this.leftKey);
+      this.savedTop = store.local.get(this.topKey);
     }
 
     this.handleOnMoveEnd = this.handleOnMoveEnd.bind(this);
@@ -28,14 +25,67 @@ class Window extends React.Component {
   }
 
   render() {
+
+    const styleForWindow = Object.assign(
+      {
+        minWidth: '300px',
+        minHeight: '200px',
+        position: 'fixed',
+        left: '100px',
+        top: '100px'
+      },
+      this.props.style
+    );
+
+    if (typeof this.savedLeft === 'number' && typeof this.savedTop === 'number') {
+      styleForWindow.left = `${this.savedLeft}px`;
+      styleForWindow.top = `${this.savedTop}px`;
+    }
+
+    const styleForMovable = {};
+    [
+      'position',
+      'left',
+      'top',
+      'right',
+      'bottom'
+    ].forEach((name) => {
+      styleForMovable[name] = styleForWindow[name];
+      delete styleForWindow[name];
+    });
+
     return (
       <Movable
-        style={this.props.style}
-        initialLeft={this.initialLeft}
-        initialTop={this.initialTop}
+        style={styleForMovable}
         onMoveEnd={this.handleOnMoveEnd}
       >
-        {this.props.children}
+
+        <div className="fw-window" style={styleForWindow}>
+
+          <div className="fw-window-header mover">
+
+            {this.props.header}
+
+            <div className="fw-window-header-close-button"/>
+
+          </div>
+
+          <div className="fw-window-body">
+            {this.props.body}
+          </div>
+
+          <div className="fw-window-footer">
+
+            {this.props.buttons}
+
+            <div className="fw-button">
+              Закрыть
+            </div>
+
+          </div>
+
+        </div>
+
       </Movable>
     );
   }

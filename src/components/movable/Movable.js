@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import React from 'react';
 
 class Movable extends React.Component {
@@ -13,11 +11,7 @@ class Movable extends React.Component {
     this.handleOnMouseUp = this.handleOnMouseUp.bind(this);
     this.handleOnMouseMove = this.handleOnMouseMove.bind(this);
 
-    // Устанавливаем начальное положение окна
-    this.state = {
-      left: this.props.initialLeft ? this.props.initialLeft : '100px',
-      top: this.props.initialTop ? this.props.initialTop : '100px'
-    };
+    this.state = {};
   }
 
   handleOnMouseUp() {
@@ -77,14 +71,6 @@ class Movable extends React.Component {
     this.startMouseClientY = e.clientY;
   }
 
-  isInsideWindowX(x) {
-    return x >= 0 && x <= window.innerWidth;
-  }
-
-  isInsideWindowY(y) {
-    return y >= 0 && y <= window.innerHeight;
-  }
-
   handleOnMouseMove(e) {
 
     // Насколько пикселей мы сдвинули мышку
@@ -111,8 +97,8 @@ class Movable extends React.Component {
     }
 
     this.setState({
-      left: `${this.startPixelLeft + dX}px`,
-      top: `${this.startPixelTop + dY}px`,
+      left: this.startPixelLeft + dX,
+      top: this.startPixelTop + dY
     });
   }
 
@@ -122,22 +108,18 @@ class Movable extends React.Component {
 
       // Значения по-умолчанию
       {
-        backgroundColor: 'Cyan',
         wordWrap: 'break-word',
-        position: 'absolute',
-        width: '400px',
-        height: '200px',
+        position: 'absolute'
       },
 
       // Значения, переданные нам извне
-      this.props.style,
-
-      // Значения из нашего внутреннего стейта
-      {
-        top: this.state.top,
-        left: this.state.left
-      }
+      this.props.style
     );
+
+    if (typeof this.state.left && typeof this.state.top === 'number') {
+      style.left = `${this.state.left}px`;
+      style.top = `${this.state.top}px`;
+    }
 
     return (
       <div
@@ -161,7 +143,7 @@ class Movable extends React.Component {
         this.setupMover(mover);
       }
     } else {
-      this.setupMover(mover);
+      this.setupMover(element);
     }
   }
 
