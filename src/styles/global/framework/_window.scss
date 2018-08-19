@@ -29,6 +29,7 @@ $fw-window-shadow-color: $fw-shadow-color !default;
 
     .fw-window-header-text {
       font-size: 1.5em;
+      flex-grow: 1;
     }
 
     .fw-window-header-close-button {
