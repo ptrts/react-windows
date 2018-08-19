@@ -10,6 +10,9 @@ $fw-window-shadow-color: $fw-shadow-color !default;
   /*h-offset v-offset blur spread color [inset]*/
   box-shadow: 3px 3px 5px 0 $fw-window-shadow-color;
 
+  display: flex;
+  flex-direction: column;
+
   > :not(:last-child) {
     border-bottom: solid $fw-window-border-color $fw-window-border-width;
   }
@@ -30,7 +33,7 @@ $fw-window-shadow-color: $fw-shadow-color !default;
   }
 
   .fw-window-body {
-
+    flex-grow: 1;
   }
 
   .fw-window-footer {
