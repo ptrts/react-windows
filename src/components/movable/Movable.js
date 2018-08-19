@@ -13,30 +13,17 @@ class Movable extends React.Component {
     this.handleOnMouseUp = this.handleOnMouseUp.bind(this);
     this.handleOnMouseMove = this.handleOnMouseMove.bind(this);
 
-    // Значения стейта по-умолчанию
+    // Устанавливаем начальное положение окна
     this.state = {
-      top: '100px',
-      left: '100px',
+      left: this.props.initialLeft ? this.props.initialLeft : '100px',
+      top: this.props.initialTop ? this.props.initialTop : '100px'
     };
-
-    // Из стиля, переданного через пропы, достаем top и left, которые у нас будут на самом деле не часть пропа, а
-    // которые будут частью нашего стейта
-    // Значения этих свойств, переданные через пропы - это будут всего-навсего начальные значения нашего стейта
-    // При обновлении пропов, перед последующими вызовами метода render, top и left, переданные в пропах будут
-    // уже игнорироваться. Вместо них будут браться соответствующие значения из стейта.
-    if (this.props.style) {
-      if (this.props.style.hasOwnProperty('top')) {
-        this.state.top = this.props.style.top;
-      }
-      if (this.props.style.hasOwnProperty('left')) {
-        this.state.left = this.props.style.left;
-      }
-    }
   }
 
   handleOnMouseUp() {
     document.onmouseup = null;
     document.onmousemove = null;
+    this.props.onMoveEnd({left: this.state.left, top: this.state.top});
   }
 
   handleOnMouseDown(e) {
@@ -146,6 +133,8 @@ class Movable extends React.Component {
   }
 }
 
-Movable.defaultProps = {};
+Movable.defaultProps = {
+  onMoveEnd: () => {}
+};
 
 export default Movable;
