@@ -12,43 +12,28 @@ class AppComponent extends React.Component {
   constructor(props) {
     super(props);
 
-    this.onCloseRequest = this.onCloseRequest.bind(this);
-    this.openWindow = this.openWindow.bind(this);
-
     this.state = {
-      window1Opened: true,
-      openWindows: {},
-      minimizedWindows: {}
+      windowInfos: {}
     };
   }
 
-  setWindow(windows, id, window) {
+  setWindow(id, window, minimized) {
 
-    const newWindows = Object.assign({}, windows);
+    const newWindows = Object.assign({}, this.state.windowInfos);
 
     if (window) {
-      newWindows[id] = window;
+      newWindows[id] = {window: window, minimized: minimized};
     } else {
       delete newWindows[id];
     }
 
-    return newWindows;
-  }
-
-  setOpenWindow(id, window) {
     this.setState({
-      openWindows: this.setWindow(this.state.openWindows, id, window)
-    });
-  }
-
-  setMinimizedWindow(id, window) {
-    this.setState({
-      minimizedWindows: this.setWindow(this.state.minimizedWindows, id, window)
+      windowInfos: newWindows
     });
   }
 
   openWindow(id) {
-    
+
     const newWindow =
       <Window1
         id={id}
@@ -56,45 +41,41 @@ class AppComponent extends React.Component {
         onMinimizeRequest={this.onMinimizeRequest.bind(this, id)}
         onCloseRequest={this.onCloseRequest.bind(this, id)}
       />;
-    
-    this.setOpenWindow(id, newWindow);
+
+    this.setWindow(id, newWindow, false);
   }
 
   onMinimizeRequest(id) {
 
-    const window = this.state.openWindows[id];
+    const window = this.state.windowInfos[id].window;
 
-    this.setOpenWindow(id, null);
-    this.setMinimizedWindow(id, window);
+    this.setWindow(id, window, true);
   }
 
   restore(id) {
 
-    const window = this.state.minimizedWindows[id];
+    const window = this.state.windowInfos[id].window;
 
-    this.setMinimizedWindow(id, null);
-    this.setOpenWindow(id, window);
+    this.setWindow(id, window, false);
   }
 
   onCloseRequest(id) {
-    this.setOpenWindow(id, null);
+    this.setWindow(id, null);
   }
 
   render() {
 
     const openWindowsArray = [];
-
-    for (let k in this.state.openWindows) {
-      if (this.state.openWindows.hasOwnProperty(k)) {
-        const window = this.state.openWindows[k];
-        openWindowsArray.push(window);
-      }
-    }
-
     const minimizedWindowIds = [];
-    for (let k in this.state.minimizedWindows) {
-      if (this.state.minimizedWindows.hasOwnProperty(k)) {
-        minimizedWindowIds.push(k);
+
+    for (let id in this.state.windowInfos) {
+      if (this.state.windowInfos.hasOwnProperty(id)) {
+        const windowInfo = this.state.windowInfos[id];
+        if (windowInfo.minimized) {
+          minimizedWindowIds.push(id);
+        } else {
+          openWindowsArray.push(windowInfo.window);
+        }
       }
     }
 
