@@ -1,16 +1,50 @@
+$fw-button-background-color: PowderBlue;
+$fw-button-hover-background-color: SkyBlue;
+$fw-button-color: Black;
+
 .fw-button {
   -webkit-appearance: none;
   -moz-appearance: none;
   border: none;
-  background-color: PowderBlue;
+  background-color: $fw-button-background-color;
   padding: 0.5em;
   cursor: pointer;
+  color: $fw-button-color;
 
   &:hover {
-    background-color: SkyBlue;
+    background-color: $fw-button-hover-background-color;
   }
 
   &:focus {
     outline: none;
+  }
+}
+
+.fw-button-group {
+
+  display: flex;
+
+  > .fw-button-group-button-wrapper {
+
+    display: flex;
+
+    &::before, &::after {
+      border-top: solid $fw-button-background-color 3px;
+      border-bottom: solid $fw-button-background-color 3px;
+      background-color: $fw-button-color;
+      width: 0.5px;
+      content: '';
+    }
+
+    &:first-child::before, &:last-child::after {
+      display: none;
+    }
+
+    &:hover {
+      &::before, &::after {
+        border-top-color: $fw-button-hover-background-color;
+        border-bottom-color: $fw-button-hover-background-color;
+      }
+    }
   }
 }

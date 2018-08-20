@@ -79,26 +79,40 @@ class AppComponent extends React.Component {
       }
     }
 
-    const restoreButtons = minimizedWindowIds.map((id) =>
-      <button
-        key={id}
-        className="fw-button"
-        onClick={this.restore.bind(this, id)}
-      >
-        {id}
-      </button>
-    );
+    const restoreButtons = minimizedWindowIds.map((id) => {
+
+      const RestoreButton =
+        <div key={id} className="fw-button-group-button-wrapper">
+          <button
+            key={id}
+            className="fw-button"
+            onClick={this.restore.bind(this, id)}
+          >
+            {id}
+          </button>
+        </div>;
+
+      return RestoreButton;
+    });
 
     return (
       <React.Fragment>
 
-        <button className="fw-button" onClick={this.openWindow.bind(this, 1)}>
-          Окно 1
-        </button>
+        <div className="fw-button-group">
 
-        <button className="fw-button" onClick={this.openWindow.bind(this, 2)}>
-          Окно 2
-        </button>
+          <div className="fw-button-group-button-wrapper">
+            <button className="fw-button" onClick={this.openWindow.bind(this, 1)}>
+              Окно 1
+            </button>
+          </div>
+
+          <div className="fw-button-group-button-wrapper">
+            <button className="fw-button" onClick={this.openWindow.bind(this, 2)}>
+              Окно 2
+            </button>
+          </div>
+
+        </div>
 
         <div style={{position: 'relative'}}>
           {openWindowsArray}
@@ -107,9 +121,9 @@ class AppComponent extends React.Component {
         <div
           style={{
             position: 'fixed',
-            bottom: 0,
-            display: 'flex'
+            bottom: 0
           }}
+          className="fw-button-group"
         >
           {restoreButtons}
         </div>
