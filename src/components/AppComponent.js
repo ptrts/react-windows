@@ -6,6 +6,7 @@ import 'bootstrap';
 
 import React from 'react';
 import Window1 from './window1/Window1';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 class AppComponent extends React.Component {
 
@@ -38,14 +39,14 @@ class AppComponent extends React.Component {
       <Window1
         id={id}
         key={id}
-        onMinimizeRequest={this.onMinimizeRequest.bind(this, id)}
-        onCloseRequest={this.onCloseRequest.bind(this, id)}
+        onMinimizeRequest={this.minimize.bind(this, id)}
+        onCloseRequest={this.close.bind(this, id)}
       />;
 
     this.setWindow(id, newWindow, false);
   }
 
-  onMinimizeRequest(id) {
+  minimize(id) {
 
     const window = this.state.windowInfos[id].window;
 
@@ -59,7 +60,7 @@ class AppComponent extends React.Component {
     this.setWindow(id, window, false);
   }
 
-  onCloseRequest(id) {
+  close(id) {
     this.setWindow(id, null);
   }
 
@@ -84,11 +85,13 @@ class AppComponent extends React.Component {
       const RestoreButton =
         <div key={id} className="fw-button-group-button-wrapper">
           <button
-            key={id}
             className="fw-button"
             onClick={this.restore.bind(this, id)}
           >
             {id}
+          </button>
+          <button className="fw-button" onClick={this.close.bind(this, id)}>
+            <FontAwesomeIcon icon="times"/>
           </button>
         </div>;
 
