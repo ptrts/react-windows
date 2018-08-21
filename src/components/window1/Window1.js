@@ -1,7 +1,16 @@
 import React from 'react';
 import Window from '../window/Window';
+import StringInputAccessor from '../input/str/StringInputAccessor';
 
 class Window1 extends React.Component {
+
+  textOnTouch() {
+    console.warn('text touched');
+  }
+
+  textOnChange(newValue) {
+    console.warn('text changed: ' + newValue);
+  }
 
   render() {
     return (
@@ -26,7 +35,10 @@ class Window1 extends React.Component {
         header={'Заголовок окна ' + this.props.id}
 
         body={
-          <input type="text" width="10"/>
+          <StringInputAccessor
+            width="10"
+            onChange={this.textOnChange.bind(this)}
+            onTouch={this.textOnTouch.bind(this)}/>
         }
 
         buttons={
