@@ -25,7 +25,9 @@ class Window1 extends React.Component {
 
         header={'Заголовок окна ' + this.props.id}
 
-        body={'Содержимое окна ' + this.props.id}
+        body={
+          <input type="text" width="10"/>
+        }
 
         buttons={
           <React.Fragment>
