@@ -39,6 +39,8 @@ class Window1 extends React.Component {
 
         onMinimizeRequest={this.props.onMinimizeRequest}
         onCloseRequest={this.props.onCloseRequest}
+
+        visible={this.props.visible}
       />
     );
   }

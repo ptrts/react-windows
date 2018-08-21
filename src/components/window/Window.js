@@ -69,6 +69,7 @@ class Window extends React.Component {
       <Movable
         style={styleForMovable}
         onMoveEnd={this.handleOnMoveEnd}
+        visible={this.props.visible}
       >
 
         <div className="fw-window" style={styleForWindow}>

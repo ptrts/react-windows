@@ -121,6 +121,11 @@ class Movable extends React.Component {
       style.top = `${this.state.top}px`;
     }
 
+
+    if (!this.props.visible) {
+      style.display = 'none';
+    }
+
     return (
       <div
         ref={this.ref}
@@ -154,7 +159,8 @@ class Movable extends React.Component {
 }
 
 Movable.defaultProps = {
-  onMoveEnd: () => {}
+  onMoveEnd: () => {},
+  visible: true
 };
 
 export default Movable;

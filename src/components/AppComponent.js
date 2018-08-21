@@ -18,85 +18,76 @@ class AppComponent extends React.Component {
     };
   }
 
-  setWindow(id, window, minimized) {
+  setWindowInfo(id, minimized) {
 
-    const newWindows = Object.assign({}, this.state.windowInfos);
+    const newWindowInfos = Object.assign({}, this.state.windowInfos);
 
-    if (window) {
-      newWindows[id] = {window: window, minimized: minimized};
+    if (typeof minimized === 'boolean') {
+      newWindowInfos[id] = {minimized: minimized};
     } else {
-      delete newWindows[id];
+      delete newWindowInfos[id];
     }
 
     this.setState({
-      windowInfos: newWindows
+      windowInfos: newWindowInfos
     });
   }
 
   openWindow(id) {
-
-    const newWindow =
-      <Window1
-        id={id}
-        key={id}
-        onMinimizeRequest={this.minimize.bind(this, id)}
-        onCloseRequest={this.close.bind(this, id)}
-      />;
-
-    this.setWindow(id, newWindow, false);
+    this.setWindowInfo(id, false);
   }
 
   minimize(id) {
-
-    const window = this.state.windowInfos[id].window;
-
-    this.setWindow(id, window, true);
+    this.setWindowInfo(id, true);
   }
 
   restore(id) {
-
-    const window = this.state.windowInfos[id].window;
-
-    this.setWindow(id, window, false);
+    this.setWindowInfo(id, false);
   }
 
   close(id) {
-    this.setWindow(id, null);
+    this.setWindowInfo(id, null);
   }
 
   render() {
 
-    const openWindowsArray = [];
-    const minimizedWindowIds = [];
-
+    const windows = [];
+    const restoreButtons = [];
     for (let id in this.state.windowInfos) {
       if (this.state.windowInfos.hasOwnProperty(id)) {
+
         const windowInfo = this.state.windowInfos[id];
+
+        const window =
+          <Window1
+            id={id}
+            key={id}
+            onMinimizeRequest={this.minimize.bind(this, id)}
+            onCloseRequest={this.close.bind(this, id)}
+            visible={!windowInfo.minimized}
+          />;
+
+        windows.push(window);
+
         if (windowInfo.minimized) {
-          minimizedWindowIds.push(id);
-        } else {
-          openWindowsArray.push(windowInfo.window);
+
+          const RestoreButton =
+            <div key={id} className="fw-button-group-button-wrapper">
+              <button
+                className="fw-button"
+                onClick={this.restore.bind(this, id)}
+              >
+                {id}
+              </button>
+              <button className="fw-button" onClick={this.close.bind(this, id)}>
+                <FontAwesomeIcon icon="times"/>
+              </button>
+            </div>;
+
+          restoreButtons.push(RestoreButton);
         }
       }
     }
-
-    const restoreButtons = minimizedWindowIds.map((id) => {
-
-      const RestoreButton =
-        <div key={id} className="fw-button-group-button-wrapper">
-          <button
-            className="fw-button"
-            onClick={this.restore.bind(this, id)}
-          >
-            {id}
-          </button>
-          <button className="fw-button" onClick={this.close.bind(this, id)}>
-            <FontAwesomeIcon icon="times"/>
-          </button>
-        </div>;
-
-      return RestoreButton;
-    });
 
     return (
       <React.Fragment>
@@ -118,7 +109,7 @@ class AppComponent extends React.Component {
         </div>
 
         <div style={{position: 'relative'}}>
-          {openWindowsArray}
+          {windows}
         </div>
 
         <div
