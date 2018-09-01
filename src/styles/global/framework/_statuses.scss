@@ -1,0 +1,28 @@
+input[type="text"] {
+
+  border: LightGrey solid 2px;
+
+  &.fw-touched {
+    border-left: Red solid 2px;
+  }
+
+  &.fw-untouched {
+    border-left: Green solid 2px;
+  }
+
+  &.fw-dirty {
+    border-right: Red solid 2px;
+  }
+
+  &.fw-pristine {
+    border-right: Green solid 2px;
+  }
+
+  &.fw-invalid {
+    border-bottom: Red solid 2px;
+  }
+
+  &.fw-valid {
+    border-bottom: Green solid 2px;
+  }
+}
