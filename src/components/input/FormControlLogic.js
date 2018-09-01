@@ -42,7 +42,7 @@ export default class FormControlLogic {
     // Ну и ладно. Это называется "making the state the only source of truth"
     component.setState({value: newValue, inputErrors: inputErrors}, () => {
 
-      console.warn(`value = ${component.state.value}`);
+      // console.warn(`value = ${component.state.value}`);
 
       FormControlLogic._onChangeInternal(component);
     });
@@ -121,7 +121,7 @@ export default class FormControlLogic {
       Object.assign(errors, errors2);
     }
 
-    console.warn(`errors = ${JSON.stringify(errors, null, '\t')}`);
+    // console.warn(`errors = ${JSON.stringify(errors, null, '\t')}`);
 
     const valid = !ObjectUtils.isNotEmpty(errors);
 
